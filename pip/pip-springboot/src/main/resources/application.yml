@@ -29,20 +29,21 @@ resilience4j:
   circuitbreaker:
     instances:
       productService:
-        register-health-indicator: true
-        sliding-window-size: 10
-        minimum-number-of-calls: 5
-        failure-rate-threshold: 50
-        wait-duration-in-open-state: 10s
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
   retry:
     instances:
       productService:
-        max-attempts: 3
-        wait-duration: 500ms
+        maxAttempts: 3
+        waitDuration: 2s
   timelimiter:
     instances:
       productService:
-         timeout-duration: 2s
+         timeoutDuration: 3s
 
 logging:
     level:

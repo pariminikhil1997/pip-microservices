@@ -1,8 +1,6 @@
 package com.java.pip.dto;
 
-import com.java.pip.client.dto.ProductDTO;
-
 public record UserWithProductResponse(Long userId,
 		                              String name,
 		                              String email,
-		                              ProductDTO product) {}
+		                              ProductResponseDTO product) {}

@@ -3,7 +3,7 @@ package com.java.pip.service;
 import org.springframework.stereotype.Service;
 
 import com.java.pip.client.ProductClient;
-import com.java.pip.client.dto.ProductDTO;
+import com.java.pip.dto.ProductResponseDTO;
 import com.java.pip.dto.UserResponseDTO;
 import com.java.pip.dto.UserWithProductResponse;
 
@@ -19,7 +19,7 @@ public class UserAggregationService {
     public UserWithProductResponse getUserWithProduct(Long userId, Long productId) {
     	
     	UserResponseDTO user = userService.getUserById(userId);
-    	ProductDTO product = productClient.getProduct(productId);
+    	ProductResponseDTO product = productClient.getProduct(productId).join();
     	return new UserWithProductResponse(
                 user.id(),
                 user.name(),
