@@ -1,0 +1,30 @@
+name: Microservices CI with Docker
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Build user-service
+        working-directory: user-service
+        run: mvn clean install
+
+      - name: Build product-service
+        working-directory: product-service
+        run: mvn clean install
