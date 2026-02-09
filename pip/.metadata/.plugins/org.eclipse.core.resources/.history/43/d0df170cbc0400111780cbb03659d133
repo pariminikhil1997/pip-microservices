@@ -1,0 +1,5 @@
+package com.java.pip.client.dto;
+
+public record ProductDTO() {
+
+}

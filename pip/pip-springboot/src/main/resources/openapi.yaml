@@ -1,0 +1,208 @@
+openapi: 3.0.3
+info:
+  title: PIP User Management API
+  version: "1.0.0"
+  description: |
+    API for managing users in the Product Information Platform (PIP).
+    Supports creating, updating, fetching and deleting users.
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+tags:
+  - name: Users
+    description: Operations for managing users
+paths:
+  /api/users:
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+            examples:
+              createUser:
+                value:
+                  firstName: "Alice"
+                  lastName: "Smith"
+                  email: "alice@example.com"
+                  password: "P@ssw0rd"
+      responses:
+        '201':
+          description: User created
+          headers:
+            Location:
+              description: URL of the created user
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /api/users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get a user by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the user to get
+      responses:
+        '200':
+          description: Successful response with user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Users
+      summary: Update an existing user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the user to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+            examples:
+              updateUser:
+                value:
+                  firstName: "Alice"
+                  lastName: "Johnson"
+                  email: "alice.johnson@example.com"
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+        - Users
+      summary: Delete a user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the user to delete
+      responses:
+        '204':
+          description: User deleted successfully (no content)
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    UserRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: "John"
+        lastName:
+          type: string
+          example: "Doe"
+        email:
+          type: string
+          format: email
+          example: "john.doe@example.com"
+        password:
+          type: string
+          format: password
+          example: "P@ssw0rd"
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        firstName:
+          type: string
+          example: "John"
+        lastName:
+          type: string
+          example: "Doe"
+        email:
+          type: string
+          format: email
+          example: "john.doe@example.com"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2026-01-28T12:34:56Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2026-01-28T12:34:56Z"
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request (validation error)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+      example:
+        timestamp: "2026-01-28T12:34:56Z"
+        status: 404
+        error: "Not Found"
+        message: "User with id 123 not found"
+        path: "/api/users/123"

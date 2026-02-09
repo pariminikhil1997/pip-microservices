@@ -1,0 +1,3 @@
+package com.accenture.pip.product_service.dto;
+
+public record ProductResponseDto(Long id, String name, Double price) {}

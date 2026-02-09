@@ -1,0 +1,49 @@
+server:
+    port: 8080
+
+spring:
+  application:
+    name: user-service
+  profiles:
+    active: dev
+  cache:
+    type: caffeine
+
+product:
+  service:
+    url: http://localhost:8081
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health,info,metrics
+    endpoint:
+        health:
+            show-details: always
+    metrics:
+        enable:
+            cache: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      productService:
+        register-health-indicator: true
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+  retry:
+    instances:
+      productService:
+        max-attempts: 3
+        wait-duration: 500ms
+  timelimiter:
+    instances:
+      productService:
+         timeout-duration: 2s
+
+logging:
+    level:
+        root: INFO

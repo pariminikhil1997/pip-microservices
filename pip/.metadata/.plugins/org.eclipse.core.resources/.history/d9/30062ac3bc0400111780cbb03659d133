@@ -1,0 +1,15 @@
+package com.java.pip.client.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import lombok.Value;
+
+@Configuration
+public class ProductClientConfig {
+	
+	WebClient productWebClient(@Value("${product.service.url}") String baseUrl) {
+		
+	}
+
+}

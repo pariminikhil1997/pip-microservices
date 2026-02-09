@@ -1,0 +1,7 @@
+package com.java.pip.logger;
+
+@Component
+@RequiredArgsConstructor
+public class HibernateStatsLogger {
+
+}

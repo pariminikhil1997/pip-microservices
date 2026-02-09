@@ -1,0 +1,64 @@
+package com.java.pip.controller;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.java.pip.dto.UserRequestDTO;
+import com.java.pip.dto.UserResponseDTO;
+import com.java.pip.service.UserService;
+import com.java.pip.util.ApiResponseUtil;
+
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
+public class UserController {
+
+	private final UserService userService;
+	
+	@Operation(summary = "Create user", description = "Create a new user")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PostMapping
+	public ApiResponseUtil<UserResponseDTO> create(@Valid @RequestBody UserRequestDTO dto) {
+		return new ApiResponseUtil<>("SUCCESS", userService.createUser(dto));
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	@GetMapping("/{id}")
+	public ApiResponseUtil<UserResponseDTO> getById(@PathVariable Long id) {
+		return new ApiResponseUtil<>("SUCCESS", userService.getUserById(id));
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	@GetMapping
+	public ApiResponseUtil<Page<UserResponseDTO>> getAll(@PageableDefault(size = 10, sort = "id") Pageable pageable){
+		return new ApiResponseUtil<>("SUCCESS", userService.getAllUsers(pageable));
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PutMapping("/{id}")
+	public ApiResponseUtil<UserResponseDTO> update(@PathVariable Long id, @Valid @RequestBody UserRequestDTO dto) {
+		return new ApiResponseUtil<>("SUCCESS", userService.updateUser(id, dto));
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@DeleteMapping("/{id}")
+	public ApiResponseUtil<Void> delete(@PathVariable Long id) {
+		userService.deleteUser(id);
+		return new ApiResponseUtil<>("SUCCESS", null);
+	}
+}

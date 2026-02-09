@@ -1,0 +1,9 @@
+package com.java.pip.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.java.pip.entity.Product;
+
+public interface ProductRepository extends JpaRepository<Product, Long> {
+	
+}

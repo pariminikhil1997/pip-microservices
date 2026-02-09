@@ -1,0 +1,15 @@
+package com.accenture.pip.product_service.config;
+
+@Configuration
+public class ProductClientConfig {
+	
+	@Bean
+    WebClient productWebClient(
+        @Value("${product.service.url}") String baseUrl
+    ) {
+        return WebClient.builder()
+                .baseUrl(baseUrl)
+                .build();
+    }
+
+}

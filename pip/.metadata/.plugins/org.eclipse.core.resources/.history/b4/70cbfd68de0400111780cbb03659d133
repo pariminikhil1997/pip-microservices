@@ -1,0 +1,33 @@
+package com.java.pip.client;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import com.java.pip.client.dto.ProductDTO;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class ProductClient {
+	
+	private final WebClient productWebClient;
+	
+	@CircuitBreaker(name = "productService", fallbackMethod = "fallbackProduct")
+	@Retry(name = "productService")
+	public ProductDTO getProduct(Long productId) {
+		
+		log.debug("Calling product-service productId={}", productId);
+		
+		return productWebClient.get()
+                .uri("/api/v1/products/{id}", productId)
+                .retrieve()
+                .bodyToMono(ProductDTO.class)
+                .block();	
+	}	
+}

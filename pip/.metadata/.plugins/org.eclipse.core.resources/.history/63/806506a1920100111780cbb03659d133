@@ -1,0 +1,13 @@
+package com.java.pip.dto;
+
+import java.util.Set;
+
+import com.java.pip.entity.Role;
+
+public record UserResponseDTO (
+	Long id,
+	String name,
+	String email,
+	Set<String> roles) {
+
+}

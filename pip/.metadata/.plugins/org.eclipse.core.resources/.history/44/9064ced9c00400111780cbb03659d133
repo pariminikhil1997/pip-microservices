@@ -1,0 +1,17 @@
+package com.java.pip.service;
+
+import com.java.pip.client.ProductClient;
+
+import io.swagger.v3.oas.annotations.servers.Server;
+import lombok.RequiredArgsConstructor;
+
+@Server
+@RequiredArgsConstructor
+public class UserAggregationService {
+	
+	private final UserService userService;
+    private final ProductClient productClient;
+    
+    
+
+}

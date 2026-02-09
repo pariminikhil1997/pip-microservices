@@ -1,0 +1,16 @@
+server.port=8081
+spring.application.name=product-service
+
+spring.datasource.url=jdbc:h2:mem:productdb
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+management.endpoints.web.exposure.include= health,metrics
+management.endpoint.health.show-details=always
+
+product.service.url=http://localhost:8081

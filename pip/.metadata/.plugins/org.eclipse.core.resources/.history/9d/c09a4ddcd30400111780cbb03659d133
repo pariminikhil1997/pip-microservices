@@ -1,0 +1,25 @@
+package com.java.pip.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.java.pip.service.UserAggregationService;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
+public class UserAggregationController {
+	
+	private final UserAggregationService userAggregationService;
+	
+	public ApiResponseUtil<UserWithProductResponse> getUserWithProduct(
+            @PathVariable Long userId,
+            @PathVariable Long productId) {
+
+        return new ApiResponseUtil<>("SUCCESS",
+                service.getUserWithProduct(userId, productId));
+    }
+
+}

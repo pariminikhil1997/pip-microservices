@@ -1,0 +1,60 @@
+package com.java.pip.controller;
+
+import java.util.List;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.java.pip.dto.ProductRequestDTO;
+import com.java.pip.dto.ProductResponseDTO;
+import com.java.pip.service.ProductService;
+import com.java.pip.util.ApiResponseUtil;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/products")
+public class ProductController {
+
+	private final ProductService productService;
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PostMapping
+	public ApiResponseUtil<ProductResponseDTO> create(@Valid @RequestBody ProductRequestDTO dto) {
+		return new ApiResponseUtil<>("SUCCESS", productService.createProduct(dto));
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	@GetMapping("/{id}")
+	public ApiResponseUtil<ProductResponseDTO> getById(@PathVariable Long id) {
+		return new ApiResponseUtil<>("SUCCESS", productService.getProductById(id));
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	@GetMapping
+	public ApiResponseUtil<List<ProductResponseDTO>> getAll(){
+		return new ApiResponseUtil<>("SUCCESS", productService.getallProducts());
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PutMapping("/{id}")
+	public ApiResponseUtil<ProductResponseDTO> update(@PathVariable Long id, @Valid @RequestBody ProductRequestDTO product) {
+		return new ApiResponseUtil<>("SUCCESS", productService.updateProduct(id, product));
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@DeleteMapping("/{id}")
+	public ApiResponseUtil<Void> delete(@PathVariable Long id) {
+		productService.deleteProduct(id);
+		return new ApiResponseUtil<>("SUCCESS", null);
+	}
+}

@@ -1,0 +1,8 @@
+INDEX VERSION 1.134+C:\Users\nikhil.parimi\Downloads\pip\.metadata\.plugins\org.eclipse.jdt.core
+2201422643.index
+2960399442.index
+1741950700.index
+1865797976.index
+1966586076.index
+3415134452.index
+2317501585.index

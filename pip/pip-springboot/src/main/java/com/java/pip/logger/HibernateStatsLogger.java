@@ -1,0 +1,28 @@
+package com.java.pip.logger;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.stat.Statistics;
+import org.springframework.stereotype.Component;
+
+import jakarta.annotation.PreDestroy;
+import jakarta.persistence.EntityManagerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@RequiredArgsConstructor
+@Slf4j
+public class HibernateStatsLogger {
+	
+	private final EntityManagerFactory emf;
+	
+	@PreDestroy
+    public void logStats() {
+		Statistics stats = emf.unwrap(SessionFactory.class).getStatistics();
+
+        log.info("Hibernate Statistics:");
+        log.info("Queries executed: {}", stats.getQueryExecutionCount());
+        log.info("Entity fetch count: {}", stats.getEntityFetchCount());
+        log.info("Collection fetch count: {}", stats.getCollectionFetchCount());
+    }
+}

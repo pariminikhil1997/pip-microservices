@@ -1,0 +1,5 @@
+package com.java.pip.dto;
+
+public record UserWithProductResponse() {
+
+}

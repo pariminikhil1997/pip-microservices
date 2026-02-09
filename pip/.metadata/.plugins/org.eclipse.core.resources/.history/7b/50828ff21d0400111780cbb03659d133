@@ -1,0 +1,7 @@
+package com.accenture.pip.product_service.controller;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class ProductControllerTest {
+
+}

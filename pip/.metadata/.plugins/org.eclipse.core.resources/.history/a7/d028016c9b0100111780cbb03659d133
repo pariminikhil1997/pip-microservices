@@ -1,0 +1,5 @@
+package com.java.pip.config;
+
+public class CacheConfig {
+
+}

@@ -1,0 +1,5 @@
+package com.accenture.pip.product_service.entity;
+
+public class Product {
+
+}

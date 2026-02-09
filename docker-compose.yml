@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  product-service:
+    build:
+      context: ./product-service
+    container_name: product-service
+    ports:
+      - "8081:8081"
+    networks:
+      - pip-network
+
+  user-service:
+    build:
+      context: ./user-service
+    container_name: user-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - product-service
+    networks:
+      - pip-network
+
+networks:
+  pip-network:
+    driver: bridge

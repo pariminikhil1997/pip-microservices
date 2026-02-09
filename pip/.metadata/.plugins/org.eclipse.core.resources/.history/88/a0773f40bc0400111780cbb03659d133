@@ -1,0 +1,6 @@
+package com.java.pip.client.config;
+
+@Configuration
+public class ProductClientConfig {
+
+}

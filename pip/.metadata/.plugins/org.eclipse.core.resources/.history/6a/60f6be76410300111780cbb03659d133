@@ -1,0 +1,5 @@
+package com.accenture.pip.product_service.dto;
+
+public record ProductResponseDto() {
+
+}

@@ -1,0 +1,22 @@
+package com.accenture.pip.product_service.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.accenture.pip.product_service.dto.ProductResponseDto;
+import com.accenture.pip.product_service.service.ProductService;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/products")
+@RequiredArgsConstructor
+public class ProductController {
+	
+	private final ProductService productService;
+	
+	public ProductResponseDto getProductById(Long id) {
+		return productService.getProductById(id);
+	}
+
+}

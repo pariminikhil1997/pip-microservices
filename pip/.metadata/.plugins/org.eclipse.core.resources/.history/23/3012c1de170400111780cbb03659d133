@@ -1,0 +1,9 @@
+server.port=8081
+
+spring.application.name=product-service
+
+spring.datasource.url=jdbc:h2:mem:productdb
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+management.endpoints.web.exposure.include= health,metrics

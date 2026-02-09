@@ -1,0 +1,12 @@
+package com.java.pip.client.config;
+
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class ProductClientConfig {
+	
+	WebClient productWebClient(@Value("${product.service.url}") String baseUrl) {
+		
+	}
+
+}

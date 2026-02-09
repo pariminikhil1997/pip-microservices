@@ -1,0 +1,17 @@
+package com.accenture.pip.product_service.service;
+
+import org.springframework.stereotype.Service;
+
+import com.accenture.pip.product_service.repository.ProductRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class ProductService {
+	
+	private final ProductRepository productRepository;
+	
+	
+
+}

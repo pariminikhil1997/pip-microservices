@@ -1,0 +1,7 @@
+package com.accenture.pip.product_service.entity;
+
+@Entity
+@Table(name="products")
+public class Product {
+
+}

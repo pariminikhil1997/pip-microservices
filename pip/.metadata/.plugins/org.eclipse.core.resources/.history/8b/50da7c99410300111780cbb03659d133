@@ -1,0 +1,9 @@
+package com.accenture.pip.product_service.service;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class ProductService {
+
+}

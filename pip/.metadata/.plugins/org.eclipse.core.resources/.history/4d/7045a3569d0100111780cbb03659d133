@@ -1,0 +1,11 @@
+package com.java.pip.logger;
+
+import org.springframework.stereotype.Component;
+
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class HibernateStatsLogger {
+
+}

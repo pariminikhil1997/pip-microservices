@@ -1,0 +1,5 @@
+package com.accenture.pip.product_service.repository;
+
+public interface ProductRepository {
+
+}
