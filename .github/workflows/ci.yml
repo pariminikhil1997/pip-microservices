@@ -33,7 +33,7 @@ jobs:
       # 4️⃣ Build Product Service
       - name: Build Product Service
         run: |
-          cd ../../product-service/product-service
+          cd product-service/product-service
           mvn clean install -DskipTests
 
       # 5️⃣ Set up Docker Compose (GitHub Actions has Docker pre-installed)
