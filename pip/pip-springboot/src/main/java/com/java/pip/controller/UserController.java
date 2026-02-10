@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.java.pip.dto.UserRequestDTO;
 import com.java.pip.dto.UserResponseDTO;
+import com.java.pip.dto.UserWithProductResponse;
 import com.java.pip.service.UserService;
 import com.java.pip.util.ApiResponseUtil;
 
@@ -41,6 +42,15 @@ public class UserController {
 	public ApiResponseUtil<UserResponseDTO> getById(@PathVariable Long id) {
 		return new ApiResponseUtil<>("SUCCESS", userService.getUserById(id));
 	}
+	
+	@GetMapping("/{userId}/products/{productId}")
+	public ApiResponseUtil<UserWithProductResponse> getUserWithProduct(
+            @PathVariable Long userId,
+            @PathVariable Long productId) {
+
+        return new ApiResponseUtil<>("SUCCESS",
+        		userService.getUserWithProduct(userId, productId));
+    }
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@GetMapping

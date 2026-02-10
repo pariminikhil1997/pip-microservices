@@ -32,7 +32,7 @@ public class ProductClient {
 		log.debug("Calling product-service productId={}", productId);
 		
 		return CompletableFuture.supplyAsync(() ->
-        restTemplate.getForObject(productServiceUrl + "/api/v1/products/" + productId,ProductResponseDTO.class));
+        restTemplate.getForObject(productServiceUrl + "/api/products/" + productId,ProductResponseDTO.class));
     }
 	
 	public CompletableFuture<ProductResponseDTO> fallbackProduct(Long productId, Throwable ex) {

@@ -11,8 +11,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.java.pip.client.ProductClient;
+import com.java.pip.dto.ProductResponseDTO;
 import com.java.pip.dto.UserRequestDTO;
 import com.java.pip.dto.UserResponseDTO;
+import com.java.pip.dto.UserWithProductResponse;
 import com.java.pip.entity.Role;
 import com.java.pip.entity.User;
 import com.java.pip.exception.ResourceNotFoundException;
@@ -30,6 +33,7 @@ public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final ProductClient productClient;
 
 	public UserResponseDTO map(User user) {
 		
@@ -62,6 +66,20 @@ public class UserServiceImpl implements UserService {
 			     .orElseThrow(() -> new ResourceNotFoundException("User not found with id: "+id));
 		return map(user);
 	}
+	
+	@Override
+	public UserWithProductResponse getUserWithProduct(Long userId, Long productId) {
+    	
+		log.debug("In service Fetching User userId: {} with Product productId: {}", userId, productId);
+    	UserResponseDTO user = getUserById(userId);
+    	ProductResponseDTO product = productClient.getProduct(productId).join();
+    	return new UserWithProductResponse(
+                user.id(),
+                user.name(),
+                user.email(),
+                product
+        );
+    }
 
 	@Override
 	public Page<UserResponseDTO> getAllUsers(Pageable pageable) {

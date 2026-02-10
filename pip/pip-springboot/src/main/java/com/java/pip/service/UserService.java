@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.java.pip.dto.UserRequestDTO;
 import com.java.pip.dto.UserResponseDTO;
+import com.java.pip.dto.UserWithProductResponse;
 
 public interface UserService {
 	
@@ -13,5 +14,6 @@ public interface UserService {
 	Page<UserResponseDTO> getAllUsers(Pageable pageable);
 	UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO);
 	void deleteUser(Long id);
+	UserWithProductResponse getUserWithProduct(Long userId, Long productId);
 
 }
