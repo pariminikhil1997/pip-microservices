@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: docker
+
+product:
+  service:
+    url: http://product-service:8081
