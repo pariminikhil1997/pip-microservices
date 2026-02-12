@@ -147,6 +147,7 @@
 	</dependencyManagement>
 
 	<build>
+	<finalName>pip-springboot-micro-aws-exe</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

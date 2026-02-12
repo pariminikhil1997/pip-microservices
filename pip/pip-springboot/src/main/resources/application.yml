@@ -39,7 +39,7 @@ resilience4j:
     instances:
       productService:
         maxAttempts: 3
-        waitDuration: 2s
+        waitDuration: 500ms
   timelimiter:
     instances:
       productService:
